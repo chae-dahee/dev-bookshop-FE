@@ -4,6 +4,11 @@ import { BookStoreThemeProvider } from './context/themeContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Error from './components/common/Error';
 import Signup from './pages/Signup';
+import ResetPwd from './pages/ResetPwd';
+import Login from './pages/Login';
+import Books from './pages/Books';
+import BookDetail from './pages/BookDetail';
+import Cart from './pages/Cart';
 
 const router = createBrowserRouter([
   {
@@ -19,15 +24,48 @@ const router = createBrowserRouter([
     path: '/books',
     element: (
       <Layout>
-        <div>도서목록</div>
+        <Books />
       </Layout>
     ),
+    // children:
   },
   {
     path: '/signup',
     element: (
       <Layout>
         <Signup />
+      </Layout>
+    ),
+  },
+  {
+    path: '/reset',
+    element: (
+      <Layout>
+        <ResetPwd />
+      </Layout>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <Layout>
+        <Login />
+      </Layout>
+    ),
+  },
+  {
+    path: '/book/:bookId',
+    element: (
+      <Layout>
+        <BookDetail />
+      </Layout>
+    ),
+  },
+  {
+    path: '/cart',
+    element: (
+      <Layout>
+        <Cart />
       </Layout>
     ),
   },
