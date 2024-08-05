@@ -37,7 +37,7 @@ const Button = ({
 
 const ButtonStyle = styled.button<Omit<Props, 'children'>>`
   font-size: ${({ theme, size }) => theme.button[size].fontSize};
-  padding: ${({ theme, size }) => theme.button[size].fontSize};
+  padding: ${({ theme, size }) => theme.button[size].padding};
   color: ${({ theme, scheme }) => theme.buttonScheme[scheme].color};
   background-color: ${({ theme, scheme }) =>
     theme.buttonScheme[scheme].backgroundColor};

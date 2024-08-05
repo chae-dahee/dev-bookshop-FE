@@ -5,14 +5,17 @@ import Button from '../common/Button';
 import Title from '../common/Title';
 import { formatNumber } from '../../utils/foramt';
 import CheckIconButton from './CheckIconButton';
+import { useAlert } from '../../hooks/useAlert';
 
 interface Props {
   cart: Cart;
   checkedItems: number[];
   onCheck: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-const CartItem = ({ cart, checkedItems, onCheck }: Props) => {
+const CartItem = ({ cart, checkedItems, onCheck, onDelete }: Props) => {
+  const { showConfirm } = useAlert();
   const isChecked = useMemo(() => {
     return checkedItems.includes(cart.id);
   }, [checkedItems, cart.id]);
@@ -20,10 +23,19 @@ const CartItem = ({ cart, checkedItems, onCheck }: Props) => {
   const handleChecked = () => {
     onCheck(cart.id);
   };
+
+  const handleDelete = () => {
+    showConfirm('정말 삭제하시겠습니까?', () => {
+      onDelete(cart.id);
+    });
+  };
+
   return (
     <CartItemStyle>
       <div className="info">
-        <CheckIconButton isChecked={isChecked} onCheck={handleChecked} />
+        <div className="check">
+          <CheckIconButton isChecked={isChecked} onCheck={handleChecked} />
+        </div>
         <div>
           <Title size="medium" color="text">
             {cart.title}
@@ -34,7 +46,7 @@ const CartItem = ({ cart, checkedItems, onCheck }: Props) => {
         </div>
       </div>
 
-      <Button size="medium" scheme="normal">
+      <Button size="medium" scheme="normal" onClick={handleDelete}>
         장바구니 삭제
       </Button>
     </CartItemStyle>
@@ -49,9 +61,20 @@ const CartItemStyle = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius.default};
   padding: 12px;
 
-  p {
-    padding: 0 0 8px 0;
-    margin: 0;
+  .info {
+    display: flex;
+    align-items: start;
+    flex: 1;
+
+    .check {
+      width: 40px;
+      flex-shrink: 0;
+    }
+
+    p {
+      padding: 0 0 8px 0;
+      margin: 0;
+    }
   }
 `;
 
