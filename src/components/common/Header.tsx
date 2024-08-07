@@ -1,10 +1,12 @@
 import React from 'react';
 import Logo from '../../assets/img/Logo.svg';
-import { FaSignInAlt, FaRegUser } from 'react-icons/fa';
+import { FaSignInAlt, FaRegUser, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useCategory } from '../../hooks/useCategory';
 import { useAuthStore } from '../../store/authStore';
 import styled from 'styled-components';
+import Dropdown from './Dropdown';
+import ThemeSwicher from '../header/ThemeSwicher';
 
 function Header() {
   const { category } = useCategory();
@@ -35,35 +37,40 @@ function Header() {
         </ul>
       </nav>
       <nav className="auth">
-        {isloggedIn && (
-          <ul>
-            <li>
-              <Link to="/cart">장바구니</Link>
-            </li>
-            <li>
-              <Link to="/orderlist">주문 내역</Link>
-            </li>
-            <li>
-              <button onClick={storeLogout}>로그아웃</button>
-            </li>
-          </ul>
-        )}
-        {!isloggedIn && (
-          <ul>
-            <li>
-              <Link to="/login">
-                <FaSignInAlt />
-                로그인
-              </Link>
-            </li>
-            <li>
-              <Link to="/signup">
-                <FaRegUser />
-                회원가입
-              </Link>
-            </li>
-          </ul>
-        )}
+        <Dropdown toggleBtn={<FaUserCircle />}>
+          <>
+            {isloggedIn && (
+              <ul>
+                <li>
+                  <Link to="/cart">장바구니</Link>
+                </li>
+                <li>
+                  <Link to="/orderlist">주문 내역</Link>
+                </li>
+                <li>
+                  <button onClick={storeLogout}>로그아웃</button>
+                </li>
+              </ul>
+            )}
+            {!isloggedIn && (
+              <ul>
+                <li>
+                  <Link to="/login">
+                    <FaSignInAlt />
+                    로그인
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/signup">
+                    <FaRegUser />
+                    회원가입
+                  </Link>
+                </li>
+              </ul>
+            )}
+            <ThemeSwicher />
+          </>
+        </Dropdown>
       </nav>
     </HeaderStyle>
   );
@@ -109,7 +116,9 @@ const HeaderStyle = styled.header`
   .auth {
     ul {
       display: flex;
+      flex-direction: column;
       gap: 16px;
+      width: 100px;
       li {
         a,
         button {
@@ -117,6 +126,8 @@ const HeaderStyle = styled.header`
           font-weight: 600;
           text-decoration: none;
           display: flex;
+          justify-content: center;
+          width: 100%;
           align-items: center;
           line-height: 1;
           background: none;
