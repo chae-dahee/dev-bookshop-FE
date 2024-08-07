@@ -1,21 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import MainReview from '../components/main/MainReview';
+import { useMain } from '../hooks/useMain';
 
 const Home = () => {
+  const { reviews } = useMain();
   return (
     <HomeStyle>
+      {/* 배너 */}
 
-      <h1>Home</h1>
+      {/* 베스트셀러 */}
+
+      {/* 신간 */}
+
+      {/* 리뷰 */}
+      <MainReview reviews={reviews} />
     </HomeStyle>
   );
 };
 
-const HomeStyle = styled.div`
-  color: ${({ theme }) => theme.color.primary};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-`;
+const HomeStyle = styled.div``;
 
 export default Home;
